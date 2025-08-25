@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Noticias - Nexus{% endblock %}
+{% block content %}
+<h1 style="color:#1976d2;">Noticias</h1>
+{% if news %}
+<ul style="list-style:none; padding:0;">
+    {% for item in news %}
+    <li style="border:1px solid #1976d2; background:#e3f2fd; margin:10px 0; padding:15px; border-radius:8px;">
+        <h4 style="margin:0; color:#0d47a1;">{{ item.headline }}</h4>
+        <small style="color:#555;">{{ item.date }}</small>
+        <p>{{ item.body }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No hay noticias publicadas.</p>
+{% endif %}
+{% endblock %}

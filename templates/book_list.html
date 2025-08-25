@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Catálogo - Nexus{% endblock %}
+{% block content %}
+
+<h1 style="color:#6a1b9a;">Todos los Libros</h1>
+
+<!-- Barra de búsqueda general -->
+<form action="{% url 'book_search' %}" method="get" style="margin-bottom:20px; text-align:center;">
+    <input type="text" name="q" placeholder="Buscar por título, autor o género..." 
+           value="{{ request.GET.q }}" 
+           style="padding:8px; width:60%; border:1px solid #6a1b9a; border-radius:6px;">
+    <button type="submit" style="padding:8px 15px; background:#6a1b9a; color:white; border:none; border-radius:6px;">Buscar</button>
+</form>
+
+<!-- Filtros -->
+<form id="filter-form" action="{% url 'book_list' %}" method="get" style="margin-bottom:20px; text-align:center;">
+
+    <label for="genre-select"><b>Género:</b></label>
+    <select id="genre-select" name="genre" style="margin:0 10px; padding:5px; border-radius:5px;">
+        <option value="">-- Todos --</option>
+        {% for genre in all_genres %}
+            <option value="{{ genre }}" {% if genre == request.GET.genre %}selected{% endif %}>{{ genre }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="author-select"><b>Autor:</b></label>
+    <select id="author-select" name="author" style="margin:0 10px; padding:5px; border-radius:5px;">
+        <option value="">-- Todos --</option>
+        {% for author in all_authors %}
+            <option value="{{ author }}" {% if author == request.GET.author %}selected{% endif %}>{{ author }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" style="padding:6px 12px; background:#4a148c; color:white; border:none; border-radius:5px;">
+        Aplicar Filtros
+    </button>
+</form>
+
+<!-- Grid de libros -->
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
+    {% for book in books %}
+    <div style="border:1px solid #6a1b9a; padding:15px; border-radius:10px; background:#f3e5f5; text-align:center;">
+        <img src="{{ book.cover_image }}" alt="{{ book.title }}" style="max-width:150px; height:220px; border-radius:6px;">
+        <h3 style="color:#4a148c;">{{ book.title }}</h3>
+        <p>{{ book.author }}</p>
+        <p>{{ book.synopsis }}</p>
+        {% if book.price %}
+        <p><b>Precio:</b> ${{ book.price }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

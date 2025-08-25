@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Resultados - Nexus{% endblock %}
+{% block content %}
+<h1 style="color:#0d47a1;">Resultados de búsqueda</h1>
+{% if books %}
+    <p>Se encontraron <span style="background:#2196f3; color:white; padding:3px 7px; border-radius:5px;">{{ books.count }}</span> libro(s) que coinciden con "{{ request.GET.q }}".</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
+        {% for book in books %}
+        <div style="border:1px solid #2196f3; border-radius:8px; padding:15px; background:#e3f2fd;">
+            <img src="{{ book.cover_image }}" alt="{{ book.title }}" style="max-width:150px; height:200px; display:block; margin:auto;">
+            <h3 style="color:#1565c0;">{{ book.title }}</h3>
+            <p><b>Autor:</b> {{ book.author }}</p>
+            <p><b>Género:</b> {{ book.genre }}</p>
+            {% if book.publication_year %}
+            <p><b>Año:</b> {{ book.publication_year }}</p>
+            {% endif %}
+            <details>
+                <summary style="color:#0d47a1; cursor:pointer;">Ver sinopsis</summary>
+                <p>{{ book.synopsis }}</p>
+            </details>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+<p>No se encontraron libros con "{{ request.GET.q }}".</p>
+{% endif %}
+{% endblock %}

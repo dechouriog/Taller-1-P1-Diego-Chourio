@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Noticias - Nexus{% endblock %}
+{% block content %}
+<div style="background:#fff3e0; border:2px solid #ff9800; padding:20px; border-radius:10px;">
+    <h1 style="color:#e65100;">Noticias</h1>
+    {% if news %}
+        {% for item in news %}
+        <div style="background:white; border-left:6px solid #ff9800; margin:15px 0; padding:15px; border-radius:6px;">
+            <h3 style="color:#e65100;">{{ item.headline }}</h3>
+            <p>{{ item.body }}</p>
+            {% if item.source_url %}
+            <a href="{{ item.source_url }}" target="_blank" style="color:#fb8c00;">Fuente</a>
+            {% endif %}
+            <small style="color:gray;">{{ item.date|date:'d M Y' }}</small>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay noticias disponibles.</p>
+    {% endif %}
+</div>
+{% endblock %}
